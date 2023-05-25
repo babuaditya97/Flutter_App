@@ -1,52 +1,54 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
-}
+/// Flutter code sample for [Switch].
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+void main() => runApp(const AurisApp());
+
+class AurisApp extends StatelessWidget {
+  const AurisApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Namer App',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+    return MaterialApp(
+      theme: ThemeData(useMaterial3: true),
+      home: Scaffold(
+        appBar: AppBar(title: const Text('AURIS')),
+        body: Center(
+          child: Container(
+            height: 500,
+            width: 500,
+            color: null,
+            child: const Align(
+                alignment: Alignment.bottomCenter, child: SwitchClass()),
+          ),
         ),
-        home: MyHomePage(),
       ),
     );
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
+class SwitchClass extends StatefulWidget {
+  const SwitchClass({super.key});
+
+  @override
+  State<SwitchClass> createState() => _SwitchClassState();
 }
 
-class MyHomePage extends StatelessWidget {
+class _SwitchClassState extends State<SwitchClass> {
+  bool light = true;
+
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
-    return Scaffold(
-      body: Column(
-        children: [
-          Text('A random dope idea:'),
-          Text(appState.current.asLowerCase),
-          ElevatedButton(
-            onPressed: () {
-              print('button pressed!');
-            },
-            child: Text('Next'),
-          ),
-        ],
-      ),
+    return Switch(
+      // This bool value toggles the switch.
+      value: light,
+      activeColor: Colors.red,
+      onChanged: (bool value) {
+        // This is called when the user toggles the switch.
+        setState(() {
+          light = value;
+        });
+      },
     );
   }
 }
